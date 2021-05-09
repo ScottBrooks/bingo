@@ -16,11 +16,11 @@ import (
 	"github.com/rs/zerolog/log"
 	middleware "github.com/wolfeidau/echo-middleware"
 
+	"github.com/ScottBrooks/bingo"
 	"github.com/ScottBrooks/bingo/internal/app"
 	"github.com/ScottBrooks/bingo/internal/flags"
 	"github.com/ScottBrooks/bingo/internal/logger"
 	assets "github.com/ScottBrooks/bingo/internal/middleware"
-	"github.com/ScottBrooks/bingo/internal/server"
 	"github.com/ScottBrooks/bingo/internal/templates"
 )
 
@@ -70,9 +70,9 @@ func main() {
 	e.Use(middleware.ZeroLogRequestLog())
 	e.Use(echomiddleware.Gzip())
 
-	hotwire := server.NewHotwire()
+	hotwire := bingo.NewHotwire()
 
-	server.RegisterHandlers(e, hotwire)
+	bingo.RegisterHandlers(e, hotwire)
 
 	// register the asset bundler which will build then serve any asset files
 	e.Use(assets.BundlerWithConfig(assets.BundlerConfig{
