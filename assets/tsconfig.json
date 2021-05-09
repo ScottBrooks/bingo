@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "strict": true,
+      "sourceMap": true,
+      "lib": ["esnext", "dom"],
+      "paths": {
+          "@stimulus/core": ["./src/stimulus.umd.js"]
+      }
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts"]
+  }

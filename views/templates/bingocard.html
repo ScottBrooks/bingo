@@ -1,0 +1,18 @@
+{{define "title"}}Bingo Card{{end}}
+
+
+{{define "body"}}
+<div class="uk-container">
+    <div class="uk-grid uk-child-width-5-5@m" uk-grid>
+        {{ range .cards }}
+            <div class="uk-grid-small uk-child-width-1-5@m uk-child-width-expand@s uk-text-center" uk-grid>
+                {{ range . }}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-card-hover">{{ . }}</div>
+                </div>
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+</div>
+{{end}}
