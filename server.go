@@ -3,6 +3,7 @@ package bingo
 import (
 	"bufio"
 	"bytes"
+	"embed"
 	"fmt"
 	"io"
 
@@ -17,6 +18,9 @@ const (
 var (
 	upgrader = websocket.Upgrader{}
 )
+
+//go:embed views
+var TemplateFiles embed.FS
 
 // EchoRouter This is a simple interface which specifies echo.Route addition functions which
 // are present on both echo.Echo and echo.Group, since we want to allow using

@@ -43,14 +43,14 @@ func main() {
 
 	e := echo.New()
 
-	render := templates.New()
+	render := templates.New(bingo.TemplateFiles, "views")
 
-	err := render.AddWithLayout("views", "layouts/base.html", "templates/*.html")
+	err := render.AddWithLayout("layouts/base.html", "templates/*.html")
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to load render")
 	}
 
-	err = render.Add("views", "messages/*.html")
+	err = render.Add("messages/*.html")
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to load render")
 	}
