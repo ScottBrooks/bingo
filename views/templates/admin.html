@@ -1,0 +1,22 @@
+{{define "title"}}Bingo Admin{{end}}
+{{define "head"}}
+<script type="text/javascript">
+  if (window["WebSocket"] && window["Turbo"]) {
+    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/admincards`));
+    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/adminevents`));
+  } else {
+    console.warn("Turbo Streams over SSE not available");
+  }
+</script>
+{{end}}
+
+{{define "body"}}
+  <h1>Admin page</h1>
+  <turbo-frame id="greeting_frame">
+    <p><span id="stats">Hello</span>,
+    </p>
+  </turbo-frame>
+  <turbo-frame id="events">
+    <p>Loading events...</p>
+  </turbo-frame>
+{{end}}

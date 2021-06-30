@@ -34,7 +34,12 @@ type EchoRouter interface {
 }
 
 // Hotwire hotwire handlers which demonstate some of the capabilities
-type Hotwire struct{}
+type Hotwire struct {
+	clients []chan cardUpdate
+	stats   struct {
+		Cards int
+	}
+}
 
 // NewHotwire new hotwire handlers
 func NewHotwire() *Hotwire {

@@ -1,0 +1,16 @@
+<turbo-stream action="replace" target="events">
+  <template>
+    <table>
+      <tr><th>Event</th><th>Trigger</th></tr>
+      {{ range .Events}}
+        <tr>
+          <td>{{.Id}}</td>
+          <td>{{.Card}}</td>
+          <td>
+            {{ template "admin_event" . }}
+          </td>
+        </tr>
+      {{ end }}
+    </table>
+  </template>
+</turbo-stream>

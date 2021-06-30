@@ -1,0 +1,11 @@
+<turbo-stream action="replace" target="card">
+  <template>
+    <span id="card">
+      <div class="uk-flex uk-flex-wrap uk-flex-space-around uk-flex-5">
+        {{ range .spots }}
+          {{ template "card" . }}
+        {{ end }}
+      </div>
+    </span>
+  </template>
+</turbo-stream>

@@ -1,0 +1,27 @@
+{{define "title"}}Bingo Card{{end}}
+{{define "head"}}
+<script type="text/javascript">
+  if (window["WebSocket"] && window["Turbo"]) {
+    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/cardsocket`));
+  } else {
+    console.warn("Turbo Streams over SSE not available");
+  }
+</script>
+{{end}}
+
+{{define "body"}}
+<div class="uk-container">
+    <span id="card">waiting...</span>
+</div>
+
+<div class="uk-container">
+  <h3>Appendix</h3>
+  <ul>
+    <li>Pull a frage - Runs off on their own.</li>
+    <li>Get stratted - Gets left behind.</li>
+    <li>Josh Math - almost enough money to buy a loadout.</li>
+    <li>Pancake Pete - almost pull your chute in time.</li>
+    <li>Josh Landing - Everyone in the gulag in the first minute.</li>
+  </ul>
+</div>
+{{end}}

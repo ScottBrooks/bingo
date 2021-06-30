@@ -2,22 +2,14 @@ package bingo
 
 import "github.com/labstack/echo/v4"
 
-// ServerInterface implemented by the handlers
-type ServerInterface interface {
-	Index(echo.Context) error
-	Greeting(echo.Context) error
-	BingoCard(echo.Context) error
-	Pinger(echo.Context) error
-	Memory(echo.Context) error
-	Load(echo.Context) error
-}
-
 // RegisterHandlers register the handlers
-func RegisterHandlers(router EchoRouter, si ServerInterface, m ...echo.MiddlewareFunc) {
-	router.GET("/", si.Index)
-	router.GET("/bingocard", si.BingoCard)
-	router.GET("/greeting", si.Greeting)
-	router.POST("/pinger", si.Pinger)
-	router.GET("/memory", si.Memory)
-	router.GET("/load", si.Load)
+func RegisterHandlers(router EchoRouter, si *Hotwire, m ...echo.MiddlewareFunc) {
+	router.GET("/", si.Index)                  // displays the main page
+	router.GET("/card", si.Card)               // spawns a new bingo card
+	router.GET("/cardsocket", si.CardSocket)   // spawns a new bingo card
+	router.GET("/admin", si.Admin)             // admin view
+	router.GET("/admincards", si.AdminCards)   // admin view
+	router.GET("/adminevents", si.AdminEvents) // admin view
+	router.POST("/adminevent", si.AdminEvent)  // admin view
+	router.GET("/stats", si.Stats)             // admin view
 }

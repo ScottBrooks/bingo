@@ -17,6 +17,10 @@ var templateFuncs = template.FuncMap{
 	"getTime": func() string {
 		return time.Now().Format("15:04:05")
 	},
+	"mod": func(i, j int) bool { return i%j == 0 },
+	"isZeroTime": func(t time.Time) bool {
+		return t.IsZero()
+	},
 }
 
 // Template stores the meta data for each template, and whether it uses a layout
@@ -67,6 +71,10 @@ func (t *TemplateRenderer) Add(basepath string, patterns ...string) error {
 	if err != nil {
 		return fmt.Errorf("failed to read file names using file pattern: %w", err)
 	}
+	partials, err := readFileNames(basepath, "partials/*.html")
+	if err != nil {
+		return fmt.Errorf("failed to read file names using file pattern: %w", err)
+	}
 
 	for _, f := range filenames {
 		tname := filepath.Base(f)
@@ -74,7 +82,7 @@ func (t *TemplateRenderer) Add(basepath string, patterns ...string) error {
 		log.Debug().Str("filename", tname).Msg("register message")
 		t.templates[tname] = &Template{
 			name:     tname,
-			template: template.Must(template.New(tname).Funcs(templateFuncs).ParseFiles(f)),
+			template: template.Must(template.New(tname).Funcs(templateFuncs).ParseFiles(append([]string{f}, partials...)...)),
 		}
 	}
 
@@ -83,12 +91,6 @@ func (t *TemplateRenderer) Add(basepath string, patterns ...string) error {
 
 // Render renders a template document
 func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	l := log.Ctx(c.Request().Context()).Info().Str("name", name)
-
-	l.Msg(fmt.Sprintf("Templates: %+v", t.templates))
-
-	log.Ctx(c.Request().Context()).Debug().Str("name", name).Msg("Render")
-
 	tmpl, ok := t.templates[name]
 	if !ok {
 		log.Ctx(c.Request().Context()).Error().Str("name", name).Msg("template not found")
@@ -102,14 +104,11 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 		execName = tmpl.layout
 	}
 
-	start := time.Now()
 	err := tmpl.template.ExecuteTemplate(w, execName, data)
 	if err != nil {
 		log.Ctx(c.Request().Context()).Error().Err(err).Str("name", tmpl.name).Str("layout", tmpl.layout).Msg("render template failed")
 		return err
 	}
-
-	log.Ctx(c.Request().Context()).Debug().Str("name", tmpl.name).Str("dur", time.Since(start).String()).Str("layout", tmpl.layout).Msg("execute template")
 
 	return nil
 }

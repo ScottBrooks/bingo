@@ -1,0 +1,16 @@
+{{ define "admin_event" }}
+<div id="event_{{.Id}}">
+    {{ if .Timestamp | isZeroTime }}
+    <form action="/adminevent?id={{.Id}}" method="POST" id="event_{{.Id}}">
+    <input type="submit" value="Happened"/>
+    </form>
+    {{ else }}
+    <form action="/adminevent?id={{.Id}}&woops=true" method="POST" id="event_{{.Id}}">
+    <input type="submit" value="Woops"/>
+    </form>
+    <span>
+        {{.Timestamp}}
+    </span>
+    {{ end}}
+</div>
+{{ end }}
