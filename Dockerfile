@@ -11,5 +11,6 @@ FROM gcr.io/distroless/base-debian10
 COPY --from=build /go/bin/bingo /bingo/bingo
 COPY --from=build /go/src/app/assets /bingo/assets
 
+ENV PORT 80
 WORKDIR /bingo
 CMD ["/bingo/bingo"]

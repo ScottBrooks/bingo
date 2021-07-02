@@ -2,8 +2,8 @@
 {{define "head"}}
 <script type="text/javascript">
   if (window["WebSocket"] && window["Turbo"]) {
-    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/admincards`));
-    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/adminevents`));
+    Turbo.connectStreamSource(new WebSocket(`wss://${window.location.host}/admincards`));
+    Turbo.connectStreamSource(new WebSocket(`wss://${window.location.host}/adminevents`));
   } else {
     console.warn("Turbo Streams over SSE not available");
   }

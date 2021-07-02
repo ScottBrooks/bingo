@@ -3,7 +3,7 @@
 {{define "head"}}
 <script type="text/javascript">
   if (window["WebSocket"] && window["Turbo"]) {
-    Turbo.connectStreamSource(new WebSocket(`ws://${window.location.host}/stats`));
+    Turbo.connectStreamSource(new WebSocket(`wss://${window.location.host}/stats`));
   } else {
     console.warn("Turbo Streams over SSE not available");
   }
